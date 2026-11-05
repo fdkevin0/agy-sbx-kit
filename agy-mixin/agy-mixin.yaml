@@ -78,7 +78,9 @@ capabilities:
               access_token: "{{.AccessToken}}"
               token_type: Bearer
               refresh_token: "{{.RefreshToken}}"
-              expiry: "9999-12-31T23:59:59Z"
+              # Set a past expiry so agy immediately triggers an OAuth refresh
+              # through the host proxy on startup and learns the real 1h TTL.
+              expiry: "1970-01-01T00:00:00Z"
             auth_method: "${{ kit.args.auth_method }}"
             # GCP login is incomplete without these non-secret fields. The
             # host OAuth store retains tokens, not project/region selection.
